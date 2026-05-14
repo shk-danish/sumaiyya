@@ -153,11 +153,15 @@ function LeaderLine({ point }: { point: { x: number; y: number } }) {
   );
 }
 
-function SpecCard({ a }: { a: Annotation }) {
+function SpecCard({ a, isMobile }: { a: Annotation; isMobile: boolean }) {
   return (
     <div
-      className="absolute w-[78vw] max-w-[360px] md:w-[26vw] md:max-w-[380px]"
-      style={{ left: `${a.card.x}%`, top: `${a.card.y}%` }}
+      className="absolute w-[88vw] max-w-[340px] md:w-[26vw] md:max-w-[380px]"
+      style={
+        isMobile
+          ? { top: `${a.card.y}%`, left: "50%", transform: "translateX(-50%)" }
+          : { top: `${a.card.y}%`, left: `${a.card.x}%` }
+      }
     >
       <div className="rounded-[22px] border border-white/15 bg-white/[0.06] p-5 text-white shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-2xl backdrop-saturate-150 md:p-6">
         <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-white/55">
@@ -218,6 +222,14 @@ export function Hero() {
   const [loaded, setLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
   const [visible, setVisible] = useState<Set<string>>(new Set());
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   // Preload frames
   useEffect(() => {
@@ -373,7 +385,7 @@ export function Hero() {
         {!loaded && (
           <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black">
             <div className="mb-6 text-[10px] font-medium uppercase tracking-[0.32em] text-zinc-400">
-              Loading Sumaiyya&apos;s Portfolio
+              Loading Kinaat&apos;s Portfolio
             </div>
             <div className="h-[2px] w-64 overflow-hidden rounded-full bg-white/10">
               <div
@@ -440,13 +452,13 @@ export function Hero() {
                 aria-hidden={!isVisible}
               >
                 <LeaderLine point={a.point} />
-                <SpecCard a={a} />
+                <SpecCard a={a} isMobile={isMobile} />
               </div>
             );
           })}
         </div>
 
-        {/* Bottom corner — Sumaiyya's brand */}
+        {/* Bottom corner — Kinaat's brand */}
         <div className="absolute bottom-6 right-6 z-20 hidden font-mono text-[10px] uppercase tracking-[0.28em] text-white/40 md:block">
           sumaiyyadrafts.com · available for work
         </div>

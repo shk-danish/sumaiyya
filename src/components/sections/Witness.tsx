@@ -22,6 +22,7 @@ type Annotation = {
   rows: SpecRow[];
   point: { x: number; y: number };
   card: { x: number; y: number };
+  mobileY: number; // top % for mobile alternating layout
 };
 
 const ANNOTATIONS: Annotation[] = [
@@ -37,6 +38,7 @@ const ANNOTATIONS: Annotation[] = [
     ],
     point: { x: 50, y: 44 },
     card: { x: 6, y: 60 },
+    mobileY: 10, // top
   },
   {
     id: "opening",
@@ -50,6 +52,7 @@ const ANNOTATIONS: Annotation[] = [
     ],
     point: { x: 52, y: 46 },
     card: { x: 56, y: 16 },
+    mobileY: 58, // bottom
   },
   {
     id: "singularity",
@@ -63,14 +66,19 @@ const ANNOTATIONS: Annotation[] = [
     ],
     point: { x: 50, y: 52 },
     card: { x: 6, y: 16 },
+    mobileY: 10, // top
   },
 ];
 
-function SpecCard({ a }: { a: Annotation }) {
+function SpecCard({ a, isMobile }: { a: Annotation; isMobile: boolean }) {
   return (
     <div
-      className="absolute w-[78vw] max-w-[360px] md:w-[26vw] md:max-w-[380px]"
-      style={{ left: `${a.card.x}%`, top: `${a.card.y}%` }}
+      className="absolute w-[88vw] max-w-[340px] md:w-[26vw] md:max-w-[380px]"
+      style={
+        isMobile
+          ? { top: `${a.mobileY}%`, left: "50%", transform: "translateX(-50%)" }
+          : { top: `${a.card.y}%`, left: `${a.card.x}%` }
+      }
     >
       <div className="rounded-[22px] border border-white/15 bg-white/[0.06] p-5 text-white shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-2xl backdrop-saturate-150 md:p-6">
         <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-white/55">
@@ -121,6 +129,14 @@ export function Witness() {
 
   const [loaded, setLoaded] = useState(false);
   const [visible, setVisible] = useState<Set<string>>(new Set());
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -322,7 +338,7 @@ export function Witness() {
                 }`}
                 aria-hidden={!isVisible}
               >
-                <SpecCard a={a} />
+                <SpecCard a={a} isMobile={isMobile} />
               </div>
             );
           })}
