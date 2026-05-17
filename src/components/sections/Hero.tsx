@@ -385,7 +385,7 @@ export function Hero() {
         {!loaded && (
           <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black">
             <div className="mb-6 text-[10px] font-medium uppercase tracking-[0.32em] text-zinc-400">
-              Loading Kinaat&apos;s Portfolio
+              Loading Sumaiyya&apos;s Portfolio
             </div>
             <div className="h-[2px] w-64 overflow-hidden rounded-full bg-white/10">
               <div
