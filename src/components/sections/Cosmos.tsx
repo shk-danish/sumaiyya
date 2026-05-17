@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Core, { damp } from "smooothy";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 
@@ -27,7 +27,7 @@ const ROW_TOP: Project[] = [
     classification: "WEB DEV",
     year: "2024 / REDESIGN",
     tools: "Next.js · Tailwind",
-    image: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=600&q=75",
     accent: "#fbbf24",
   },
   {
@@ -38,30 +38,30 @@ const ROW_TOP: Project[] = [
     classification: "BRANDING",
     year: "2024 / STARTUP",
     tools: "Canva · Figma",
-    image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&q=75",
     accent: "#a855f7",
   },
   {
     catalog: "PRJ 03",
-    name: "NovaClinic",
-    type: "web",
-    deliverable: "Landing Page",
-    classification: "UI / UX",
-    year: "2024 / HEALTH",
-    tools: "Figma · Next.js",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80",
-    accent: "#3b82f6",
-  },
-  {
-    catalog: "PRJ 04",
     name: "GlowKit",
     type: "social",
     deliverable: "Social Media Kit",
     classification: "CANVA",
     year: "2024 / BEAUTY",
     tools: "Canva · Reels",
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=75",
     accent: "#f43f5e",
+  },
+  {
+    catalog: "PRJ 04",
+    name: "PulseSaaS",
+    type: "web",
+    deliverable: "Product Website",
+    classification: "WEB DEV",
+    year: "2025 / TECH",
+    tools: "Next.js · Tailwind",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=75",
+    accent: "#22d3ee",
   },
   {
     catalog: "PRJ 05",
@@ -71,132 +71,66 @@ const ROW_TOP: Project[] = [
     classification: "BRANDING",
     year: "2025 / FASHION",
     tools: "Canva · Figma",
-    image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=75",
     accent: "#fb923c",
   },
+];
+
+const ROW_BOTTOM: Project[] = [
   {
     catalog: "PRJ 06",
-    name: "PulseSaaS",
-    type: "web",
-    deliverable: "Product Website",
-    classification: "WEB DEV",
-    year: "2025 / TECH",
-    tools: "Next.js · Tailwind",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80",
-    accent: "#22d3ee",
-  },
-  {
-    catalog: "PRJ 07",
     name: "AuraReels",
     type: "social",
     deliverable: "Reel Templates",
     classification: "MARKETING",
     year: "2025 / CONTENT",
     tools: "Canva · CapCut",
-    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&q=75",
     accent: "#34d399",
   },
   {
-    catalog: "PRJ 08",
-    name: "ZenSpace",
-    type: "web",
-    deliverable: "Booking UI",
-    classification: "UI / UX",
-    year: "2025 / WELLNESS",
-    tools: "Figma · React",
-    image: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80",
-    accent: "#0ea5e9",
-  },
-];
-
-const ROW_BOTTOM: Project[] = [
-  {
-    catalog: "PRJ 09",
+    catalog: "PRJ 07",
     name: "DropZone",
     type: "marketing",
     deliverable: "Ad Campaign Kit",
     classification: "MARKETING",
     year: "2024 / D2C",
     tools: "Canva · Figma",
-    image: "https://images.unsplash.com/photo-1542744094-3a31f272c490?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1542744094-3a31f272c490?w=600&q=75",
     accent: "#a78bfa",
   },
   {
-    catalog: "PRJ 10",
-    name: "SolarFoods",
-    type: "branding",
-    deliverable: "Packaging Design",
-    classification: "BRANDING",
-    year: "2024 / FOOD",
-    tools: "Canva · Illustrator",
-    image: "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=600&q=80",
-    accent: "#fbbf24",
-  },
-  {
-    catalog: "PRJ 11",
-    name: "MindPath",
+    catalog: "PRJ 08",
+    name: "NovaClinic",
     type: "web",
-    deliverable: "App Landing Page",
-    classification: "WEB DEV",
-    year: "2025 / HEALTH",
-    tools: "Next.js · Tailwind",
-    image: "https://images.unsplash.com/photo-1559028012-481c04fa702d?w=600&q=80",
-    accent: "#7c3aed",
+    deliverable: "Landing Page",
+    classification: "UI / UX",
+    year: "2024 / HEALTH",
+    tools: "Figma · Next.js",
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=75",
+    accent: "#3b82f6",
   },
   {
-    catalog: "PRJ 12",
+    catalog: "PRJ 09",
     name: "FestivalX",
     type: "marketing",
     deliverable: "Event Posters",
     classification: "GRAPHIC",
     year: "2024 / EVENTS",
     tools: "Canva · Photoshop",
-    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=75",
     accent: "#ec4899",
   },
   {
-    catalog: "PRJ 13",
-    name: "VaultWear",
-    type: "social",
-    deliverable: "Instagram Kit",
-    classification: "SOCIAL",
-    year: "2025 / FASHION",
-    tools: "Canva · Reels",
-    image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80",
-    accent: "#67e8f9",
-  },
-  {
-    catalog: "PRJ 14",
-    name: "ClearPath",
-    type: "web",
-    deliverable: "Portfolio Site",
-    classification: "UI / UX",
-    year: "2025 / PERSONAL",
-    tools: "Next.js · Figma",
-    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80",
-    accent: "#f43f5e",
-  },
-  {
-    catalog: "PRJ 15",
+    catalog: "PRJ 10",
     name: "BloomBrand",
     type: "branding",
     deliverable: "Full Brand Kit",
     classification: "BRANDING",
     year: "2025 / STARTUP",
     tools: "Canva · Figma",
-    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=75",
     accent: "#fde68a",
-  },
-  {
-    catalog: "PRJ 16",
-    name: "ClickAds",
-    type: "marketing",
-    deliverable: "Meta Ad Creatives",
-    classification: "MARKETING",
-    year: "2025 / E-COMM",
-    tools: "Canva · Figma",
-    image: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&q=80",
-    accent: "#f97316",
   },
 ];
 
@@ -207,24 +141,24 @@ function Tile({ obj, idx, total }: { obj: Project; idx: number; total: number })
         className="cosmic-tile relative aspect-[3/4] w-[72vw] max-w-[320px] overflow-hidden rounded-[24px] border border-white/10 bg-black md:w-[26vw] md:max-w-[360px]"
         data-tile
       >
-        {/* Real project image */}
+        {/* Project image */}
         <img
           src={obj.image}
           alt={obj.name}
           className="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
+          decoding="async"
         />
 
-        {/* Dark overlay so text stays readable */}
+        {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
 
-        {/* Subtle accent color tint on top */}
+        {/* Accent tint */}
         <div
-          className="absolute inset-0 opacity-20 mix-blend-color"
+          className="absolute inset-0 opacity-15 mix-blend-color"
           style={{ backgroundColor: obj.accent }}
         />
 
-        {/* Film grain */}
         <div className="film-grain" aria-hidden />
 
         {/* Top bar */}
@@ -237,14 +171,14 @@ function Tile({ obj, idx, total }: { obj: Project; idx: number; total: number })
           </div>
         </div>
 
-        {/* Vertical tools label */}
+        {/* Vertical tools */}
         <div className="pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2">
           <div className="font-mono text-[8.5px] uppercase tracking-[0.32em] text-white/35 [writing-mode:vertical-rl] [transform:rotate(180deg)]">
             {obj.tools}
           </div>
         </div>
 
-        {/* Bottom info card */}
+        {/* Bottom info */}
         <div className="pointer-events-none absolute inset-x-3 bottom-3 z-10 rounded-[16px] border border-white/12 bg-black/55 p-3 backdrop-blur-xl backdrop-saturate-150">
           <div className="flex items-baseline justify-between gap-2">
             <h3 className="text-base font-semibold leading-none tracking-tight text-white md:text-lg">
@@ -275,6 +209,7 @@ function useSmoothRow(opts: {
   reverse?: boolean;
   skew?: number;
   drift?: number;
+  isMobile?: boolean;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -286,41 +221,50 @@ function useSmoothRow(opts: {
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    const mobile = opts.isMobile ?? false;
+
+    // Mobile: faster lerp, less drag resistance, slower drift
+    const lerp    = mobile ? 0.18 : (opts.lerp ?? 0.08);
+    const drag    = mobile ? 0.012 : (opts.drag ?? 0.005);
+    const drift   = mobile ? 0.04 : (opts.drift ?? 0.18);
+    const skewMax = mobile ? 4 : (opts.skew ?? 14);
+    const blurMax = mobile ? 1.5 : 5;
+    const decay   = mobile ? 0.78 : 0.92;
+
     let raf = 0;
     let lerpedSpeed = 0;
 
     const slider = new Core(wrapper, {
       infinite: true,
       snap: false,
-      lerpFactor: opts.lerp ?? 0.08,
-      dragSensitivity: opts.drag ?? 0.005,
+      lerpFactor: lerp,
+      dragSensitivity: drag,
       scrollInput: false,
-      speedDecay: 0.92,
+      speedDecay: decay,
     });
 
     const tiles = Array.from(
       wrapper.querySelectorAll<HTMLElement>("[data-tile]")
     );
 
-    const driftRate = reduce ? 0 : opts.drift ?? 0.18;
     const driftDir = opts.reverse ? -1 : 1;
 
     const tick = () => {
       slider.update();
       const dt = slider.deltaTime || 0.016;
 
-      if (driftRate > 0 && !slider.isDragging && !slider.isTouching) {
-        slider.target += driftDir * dt * driftRate;
+      if (drift > 0 && !slider.isDragging && !slider.isTouching) {
+        slider.target += driftDir * dt * drift;
       }
 
-      lerpedSpeed = damp(lerpedSpeed, slider.speed, 6, dt);
+      lerpedSpeed = damp(lerpedSpeed, slider.speed, mobile ? 10 : 6, dt);
       const clamped = Math.max(-0.6, Math.min(0.6, lerpedSpeed));
-      const skew = reduce ? 0 : clamped * (opts.skew ?? 14);
-      const sy = reduce ? 1 : 1 - Math.min(0.05, Math.abs(clamped) * 0.45);
+      const skew = reduce ? 0 : clamped * skewMax;
+      const sy = reduce ? 1 : 1 - Math.min(0.03, Math.abs(clamped) * 0.3);
       const blur =
         reduce || Math.abs(clamped) < 0.05
           ? 0
-          : Math.min(5, Math.abs(clamped) * 9);
+          : Math.min(blurMax, Math.abs(clamped) * (mobile ? 3 : 9));
       const transform = `skewX(${skew.toFixed(2)}deg) scaleY(${sy.toFixed(3)})`;
       const filter = blur > 0 ? `blur(${blur.toFixed(1)}px)` : "";
 
@@ -338,14 +282,23 @@ function useSmoothRow(opts: {
       cancelAnimationFrame(raf);
       slider.destroy();
     };
-  }, [opts.lerp, opts.drag, opts.reverse, opts.skew, opts.drift]);
+  }, [opts.isMobile]);
 
   return ref;
 }
 
 export function Cosmos() {
-  const topRow = useSmoothRow({ lerp: 0.07, skew: 16, drift: 0.18 });
-  const botRow = useSmoothRow({ lerp: 0.09, skew: 11, reverse: true, drift: 0.12 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const topRow = useSmoothRow({ lerp: 0.07, skew: 16, drift: 0.18, isMobile });
+  const botRow = useSmoothRow({ lerp: 0.09, skew: 11, reverse: true, drift: 0.12, isMobile });
 
   return (
     <section className="relative overflow-hidden bg-black pb-24 pt-24 md:pb-32 md:pt-28">
@@ -370,7 +323,7 @@ export function Cosmos() {
           Chapter III · The Work
         </EyebrowBadge>
         <h2 className="mt-6 max-w-[20ch] text-4xl font-semibold leading-[0.98] tracking-tighter text-white md:text-6xl lg:text-[88px]">
-          Sixteen projects.
+          Ten projects.
           <br />
           <span className="bg-gradient-to-r from-amber-200 via-white to-amber-300 bg-clip-text text-transparent">
             One standard.
@@ -415,7 +368,7 @@ export function Cosmos() {
 
       <div className="relative z-10 mt-14 flex items-center justify-between px-6 md:mt-16 md:px-10">
         <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/40">
-          16 / projects · All original
+          10 / projects · All original
         </div>
         <div className="hidden items-center gap-3 font-mono text-[10px] uppercase tracking-[0.28em] text-white/40 md:flex">
           <span>← drag</span>
